@@ -3,6 +3,7 @@ from constants import *
 from player import *
 from asteroids import *
 from asteroidfield import *
+import sys
 
 def main():
     pygame.init()
@@ -20,6 +21,7 @@ def main():
 
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    
     playerUnit = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     new_field = AsteroidField()
     #################### MAIN LOOP STARTS HERE ############################
@@ -33,13 +35,23 @@ def main():
         
         for item in drawable:
             item.draw(screen)
+
+
         updatable.update(dt)
+
+        for astero in asteroidsGroup:
+            if astero.collision(playerUnit) is True:
+                print("Game Over!")
+                sys.exit()
+
+
+
+
         #playerUnit.draw(screen)
         #playerUnit.update(dt)
 
 
         pygame.display.flip()
-        clock.tick(60)
         dt = clock.tick(60)/1000
         
         
